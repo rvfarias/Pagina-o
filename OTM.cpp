@@ -49,46 +49,31 @@ int main(int argc, char const *argv[]){
                 paginas.erase(paginas.begin());
 
             }else{
-
-                if (paginas.size() <= ram.size()){
-
-                    for (int i = 0; i < ram.size(); i++){     
-                        flag = false;
-                        for (int j = 0; j < paginas.size(); j++){
+                aux1 = -1;
+                for (int i = 0; i < ram.size(); i++){    
+                    flag = false;            
+                    for (int j = 0; j < paginas.size(); j++){
                             if (ram[i] == paginas[j]){
-                                flag =true;
-                            }
-                            
-                        }
+                                flag = true;
 
-                        if (!flag){
-                            aux2 = i;
-                            break;
-                        }
-                        
-                    }
-                
-                }else{
-
-                    aux1 = -1;
-                    for (int i = 0; i < ram.size(); i++){                
-                        for (int j = 0; j < paginas.size(); j++){
-                            if (ram[i] == paginas[j] && aux1 < j){
-                                // cout << "old: " << aux2 << endl; 
-
-                                aux1 = j;
-                                aux2 = i;
-                                // cout << "new: " << aux2 << endl;
+                                if (aux1 < j){
+                                    // cout << "old: " << aux1 << endl; 
+                                    aux1 = j;
+                                    aux2 = i;
+                                    // cout << "new: " << aux1 << endl;                                
+                                }
                                 break;
                             }
-                            
                         }
-                    }
-                    // cout << "troca: " << ram[aux2] << " por " << paginas[0] << endl; 
-                }
-                
-                
 
+                    if (!flag){
+                        aux2 = i;
+                        break;
+                    }
+                }
+
+                
+                // cout << "troca: " << ram[aux2] << " por " << paginas[0] << endl; 
                 
                 ram.erase(ram.begin()+ aux2);
                 ram.push_back(paginas[0]);
