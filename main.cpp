@@ -183,11 +183,13 @@ void pag_LRU(const vector<int> &data_arq, int numQuadros){
         paginas.push_back(data_arq[i]);
     }
 
+    //Loop de execucao
     while (paginas.size()){
     
         flag = false;
+        //Verificando se a página já está na ram
         for (int i = 0; i < ram.size(); i++){
-
+            //Se estiver seta a flag pra true
             if (paginas[0] == ram[i]){
                 aux1 = i;
                 flag = true;
@@ -195,35 +197,33 @@ void pag_LRU(const vector<int> &data_arq, int numQuadros){
             }
         }
         
+        //Caso a página não esteja na ram
         if (!flag){
-
+            //E ainda tiver espaço livre 
             if (ram.size() < numQuadros){
-
+                //Adiciona a pagina na ram e apaga a mesma do array de paginas
                 ram.push_back(paginas[0]);
                 paginas.erase(paginas.begin());
 
             }else{
-                    
+                //Tira a pagina do topo do vetor ram e adiciona a nova pagina ao final    
                 ram.erase(ram.begin());
                 ram.push_back(paginas[0]);
-
                 paginas.erase(paginas.begin());
 
-
-            }
-                
+            }  
 
             fail++;
 
-            }else{
-
-                ram.erase(ram.begin() + aux1);
-                ram.push_back(paginas[0]);
-                paginas.erase(paginas.begin());
-            }
+        }else{
+            //Realoca a página que está na ram para o final do vetor e apaga a mesma do array de páginas
+            ram.erase(ram.begin() + aux1);
+            ram.push_back(paginas[0]);
+            paginas.erase(paginas.begin());
+        }
             
 
-        }
+    }
 
     cout << "LRU "<< fail << endl;
 
@@ -254,6 +254,7 @@ int main(int argc, char const *argv[]){
 
     pag_FIFO(paginas, numQuadros);
     pag_OTM(paginas, numQuadros);
+    pag_LRU(paginas, numQuadros);
 
     return 0;
 }
