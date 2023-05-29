@@ -29,12 +29,13 @@ int main(int argc, char const *argv[]){
     }
     
     while (paginas.size()){
-
+    
         flag = false;
 
         for (int i = 0; i < ram.size(); i++){
 
             if (paginas[0] == ram[i]){
+                aux1 = i;
                 flag = true;
                 break;
             }
@@ -46,76 +47,88 @@ int main(int argc, char const *argv[]){
 
                 ram.push_back(paginas[0]);
                 
-                if (!pag_usadas.size()){
+                // if (!pag_usadas.size()){
 
-                   for (int  i = 0; i <= paginas[0]; i++)
-                        pag_usadas.push_back(0);
+                //    for (int  i = 0; i <= paginas[0]; i++)
+                //         pag_usadas.push_back(0);
 
-                   pag_usadas[paginas[0]]++;
+                //    pag_usadas[paginas[0]]++;
 
-                }else{
+                // }else{
 
-                    if (paginas[0] > pag_usadas.size()){
-                        for (int  i = pag_usadas.size(); i < paginas[0]; i++)
-                            pag_usadas.push_back(0);
+                //     if (paginas[0] > pag_usadas.size()){
+                //         for (int  i = pag_usadas.size(); i < paginas[0]; i++)
+                //             pag_usadas.push_back(0);
 
-                        pag_usadas[paginas[0]]++;    
-                    }
+                //         pag_usadas[paginas[0]]++;    
+                //     }
 
-                    else if (paginas[0] < pag_usadas.size()){
-                        pag_usadas[paginas[0]]++;
+                //     else if (paginas[0] < pag_usadas.size()){
+                //         pag_usadas[paginas[0]]++;
                     
-                    }else{
-                        pag_usadas.push_back(0);
-                        pag_usadas[paginas[0]]++;
+                //     }else{
+                //         pag_usadas.push_back(0);
+                //         pag_usadas[paginas[0]]++;
 
-                    }
-                }
+                //     }
+                // }
                 
                 paginas.erase(paginas.begin());
 
             }else{
                 
-                aux1 = pag_usadas[ram[0]];
-                aux2 = 0;
-                for (int i = 1; i < ram.size(); i++){                
+            //     aux1 = pag_usadas[ram[0]];
+            //     aux2 = 0;
+            //     for (int i = 1; i < ram.size(); i++){                
                     
-                    if (pag_usadas[ram[i]] < aux1){
+            //         if (pag_usadas[ram[i]] < aux1){
         
-                        aux1 = pag_usadas[ram[i]];
-                        aux2 = i;
-                    }
+            //             aux1 = pag_usadas[ram[i]];
+            //             aux2 = i;
+            //         }
 
-                }
-                cout << "troca: " << ram[aux2] << " por " << paginas[0] << endl; 
+            //     }
+            //     cout << "troca: " << ram[aux2] << " por " << paginas[0] << endl; 
 
-                ram.erase(ram.begin()+ aux2);
+            //     ram.erase(ram.begin()+ aux2);
+            //     ram.push_back(paginas[0]);
+
+            //     if (paginas[0] > pag_usadas.size()){
+            //         for (int  i = pag_usadas.size(); i < paginas[0]; i++)
+            //             pag_usadas.push_back(0);
+            //             pag_usadas[paginas[0]]++;    
+            //         }
+
+            //     else if (paginas[0] < pag_usadas.size()){
+            //         pag_usadas[paginas[0]]++;
+                    
+            //     }else{
+
+            //         pag_usadas.push_back(0);
+            //         pag_usadas[paginas[0]]++;
+
+            //     }
+                
+            //     paginas.erase(paginas.begin());
+            //    cout << "troca: " << ram[0] << " por " << paginas[0] << endl; 
+
+                ram.erase(ram.begin());
                 ram.push_back(paginas[0]);
 
-                if (paginas[0] > pag_usadas.size()){
-                    for (int  i = pag_usadas.size(); i < paginas[0]; i++)
-                        pag_usadas.push_back(0);
-                        pag_usadas[paginas[0]]++;    
-                    }
-
-                else if (paginas[0] < pag_usadas.size()){
-                    pag_usadas[paginas[0]]++;
-                    
-                }else{
-
-                    pag_usadas.push_back(0);
-                    pag_usadas[paginas[0]]++;
-
-                }
-                
                 paginas.erase(paginas.begin());
+
+
             }
             
+
             fail++;
 
         }else{
 
-            pag_usadas[paginas[0]]++;            
+            ram.erase(ram.begin() + aux1);
+            ram.push_back(paginas[0]);
+
+            //pag_usadas[paginas[0]]++;            
             paginas.erase(paginas.begin());
         }
         
