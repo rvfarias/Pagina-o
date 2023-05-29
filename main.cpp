@@ -85,7 +85,6 @@ void pag_OTM(const vector<int> &data_arq, int numQuadros){
     //Loop de execucao
     while (paginas.size()){
 
-        // cout <<"Restante: " << paginas.size() << endl;
         flag = false;
 
         //Verificando se a página já está na ram
@@ -106,49 +105,35 @@ void pag_OTM(const vector<int> &data_arq, int numQuadros){
                 paginas.erase(paginas.begin());
 
             }else{
-                //Se não tiver espaço e se o numero de elementos em paginas for <= a capacidade da ram
-                if (paginas.size() <= ram.size()){
-                    //Procura entre os elementos da ram aquele que não aparece mais no array de paginas
-                    //para que seja substituido   
-                    for (int i = 0; i < ram.size(); i++){     
-                        flag = false;
-                        for (int j = 0; j < paginas.size(); j++){
+                //Loop para verificar se elemento na ram está no array de páginas
+                aux1 = -1;
+                for (int i = 0; i < ram.size(); i++){    
+                    flag = false;            
+                    for (int j = 0; j < paginas.size(); j++){
+                            //Se estiver seta a flag para true
                             if (ram[i] == paginas[j]){
-                                flag =true;
-                            }
-                            
-                        }
+                                flag = true;
+                                //E caso seu indice seja o maior no array de paginas, o indice é guardado para que a página seja substituida
+                                if (aux1 < j){   
+                                    aux1 = j;
+                                    aux2 = i;                                  
+                                }
 
-                        if (!flag){
-                            aux2 = i;
-                            break;
-                        }
-                        
-                    }
-                
-                }else{
-                    
-                    //Procura entre os elementos da ram aquele com maior indice no array de paginas para que seja substituido   
-                    aux1 = -1;
-                    for (int i = 0; i < ram.size(); i++){                
-                        for (int j = 0; j < paginas.size(); j++){
-                            if (ram[i] == paginas[j] && aux1 < j){
-                                // cout << "old: " << aux2 << endl; 
-                                aux1 = j;
-                                aux2 = i;
-                                // cout << "new: " << aux2 << endl;
                                 break;
                             }
-                            
                         }
+                    //Caso não esteja seu indice é guardado para que a página seja substituida
+                    if (!flag){
+                        aux2 = i;
+                        break;
                     }
-                    // cout << "troca: " << ram[aux2] << " por " << paginas[0] << endl; 
                 }
                 
                 //Realizando as substituições e apagando o elemento do array de paginas
                 ram.erase(ram.begin()+ aux2);
                 ram.push_back(paginas[0]);
                 paginas.erase(paginas.begin());
+
             }
 
             //Incrementa o numero de falhas 
